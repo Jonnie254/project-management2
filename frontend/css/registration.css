@@ -14,7 +14,7 @@ body {
   align-items: center;
   place-content: center;
 }
-.login-container {
+.register-container {
   background-color: #ffffff;
   padding: 20px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -30,10 +30,13 @@ body {
   justify-content: center;
   gap: 10px;
 }
+.container-form h1 {
+  text-align: center;
+}
 form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   margin: 10px 0;
 }
 form input {
@@ -42,16 +45,6 @@ form input {
   border-radius: 5px;
   outline: none;
   font-size: 16px;
-}
-.forgot-password {
-  display: flex;
-  justify-content: flex-end;
-  gap: 50px;
-}
-.forgot-password p {
-  color: #0077b6;
-  cursor: pointer;
-  font-size: 14px;
 }
 button {
   padding: 10px 30px;
@@ -67,10 +60,12 @@ button {
 form input:focus {
   border: 2px solid #0077b6;
 }
+form p {
+  text-align: center;
+}
 form a {
   text-decoration: none;
   color: #0077b6;
-  cursor: pointer;
 }
 .error-message p {
   color: red;
