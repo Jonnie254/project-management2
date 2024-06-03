@@ -1,0 +1,126 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: sans-serif;
+    overflow-x: hidden;
+}
+.main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background:linear-gradient();
+}
+.sideBar{
+    padding:20px 50px;
+    height: 100vh;
+    background-color: #1d1d1d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.logo h1{
+    font-size:40px;
+    color: rgb(249, 241, 230);
+}
+.create-items{
+    background-color: rgb(241, 234, 226);
+    padding:5px 10px;
+    margin: 50px 0px;
+    border-radius: 20px;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+.icon,.link-icon{
+    color: blueviolet;
+    font-size: 40px;
+}
+.link-icon{
+font-size: 30px;
+}
+.links{
+width: 100%;
+min-height: 70%;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.links ul li{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+    margin-bottom: 50px;
+}
+.links ul li a{
+    text-decoration: none;
+    color: #fff; 
+}
+
+.main-content{
+    width: 100%;
+    margin: 0px auto;
+    background-color: rgb(249, 245, 240);
+    height: 100vh;
+}
+.main-header{
+    
+    border-bottom: solid rgb(202, 197, 197) 1.5px;
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+form{
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+input{
+    padding:10px ;
+    border-radius: 10px;
+    border: none;  
+}
+input:focus{
+    outline: solid blueviolet 1px;
+}
+.profile{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.profileImg{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: solid rgb(127, 2, 251) 2px;
+    background-size: cover;
+    background-position: center;
+}
+.main-body{
+    margin: 20px auto;
+    padding: 50px;
+
+}
+.cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+   text-align: center;
+   gap: 30px;
+
+    
+}
+.card{
+   border-radius: 10px;
+   padding: 25px;
+   background-color:#fff;
+   box-shadow: 0px 0px 14px rgb(236, 233, 233);
+}
