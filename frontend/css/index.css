@@ -30,6 +30,9 @@ body {
   justify-content: center;
   gap: 10px;
 }
+.container-form h2 {
+  text-align: center;
+}
 form {
   display: flex;
   flex-direction: column;
@@ -54,15 +57,13 @@ form input {
   font-size: 14px;
 }
 button {
-  padding: 10px 30px;
+  padding: 10px;
   background-color: #0077b6;
   color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   outline: none;
-  width: 250px;
-  margin: 0 auto;
 }
 form input:focus {
   border: 2px solid #0077b6;
@@ -72,7 +73,7 @@ form a {
   color: #0077b6;
   cursor: pointer;
 }
-.error-message p {
+.error-message {
   color: red;
   text-align: center;
   display: none;
