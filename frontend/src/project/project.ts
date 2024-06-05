@@ -26,6 +26,29 @@ const nameInput = document.querySelector('#nameInput') as HTMLInputElement;
 const descriptionInput = document.querySelector('#descriptionInput') as HTMLTextAreaElement;
 const endDateInput = document.querySelector('#endDateInput') as HTMLInputElement;
 
+// Create a project
+const addProject = async (newProject: Project) => {
+  try {
+    const response = await fetch('http://localhost:3000/projects', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newProject),
+    });
+
+    if (response.ok) {
+      const project = await response.json();
+      projects.push(project);
+      renderProjects();
+    } else {
+      throw new Error('Failed to add project');
+    }
+  } catch (error) {
+    console.error('Error adding project:', error);
+  }
+};
+
 // Fetch users from the server
 const fetchUsers = async () => {
   const response = await fetch('http://localhost:3000/users');
@@ -191,11 +214,11 @@ const renderProjectFormModal = (project?: Project) => {
   successMessage.id = 'successMessage';
 
   // Append elements to form
+  projectForm.appendChild(successMessage);
   projectForm.appendChild(nameLabel);
   projectForm.appendChild(descriptionLabel);
   projectForm.appendChild(endDateLabel);
   projectForm.appendChild(assignUserLabel);
-  projectForm.appendChild(successMessage);
   projectForm.appendChild(submitButton);
 
   // Append elements to modal content
@@ -225,7 +248,9 @@ const handleFormSubmission = async (id?: string) => {
   const descriptionError = document.querySelector('#descriptionError') as HTMLParagraphElement;
   const endDateError = document.querySelector('#endDateError') as HTMLParagraphElement;
   const assignUserError = document.querySelector('#assignUserError') as HTMLParagraphElement;
+
   const successMessage = document.querySelector('#successMessage') as HTMLParagraphElement;
+ 
 
   let isValid = true;
 
@@ -266,39 +291,30 @@ const handleFormSubmission = async (id?: string) => {
       assignedUser: assignUserSelect.value,
     };
 
-    console.log(projectData)
 
     try {
       if (id) {
         await updateProject(id, projectData);
-        successMessage.textContent = 'Project updated successfully!';
+        successMessage.style.display='block'
+        successMessage.textContent='project updated successfully'
+       
       } 
       else {
-        const response = await fetch('http://localhost:3000/projects', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(projectData),
-        });
-
-        if (response.ok) {
-          const project = await response.json();
-          projects.push(project);
-          successMessage.textContent = 'Project added successfully!';
-        } else {
-          throw new Error('Failed to add project');
-        }
+      //await addProject(projectData);
+      successMessage.style.display='block';
+      successMessage.textContent='project created successfully' 
       }
-
-      successMessage.style.color = 'green';
+      
+      
 
       // Reset form
       const form = document.querySelector('.projectForm') as HTMLFormElement;
       form.reset();
       renderProjects();
       populateUsersDropdown(); // Refresh user dropdown to reflect assignment
+
     } catch (error) {
+      
       console.error('Error handling project:', error);
     }
   }
@@ -321,7 +337,8 @@ const renderProjects = async () => {
   table.appendChild(headerRow);
 
   projects.forEach((project: Project) => {
-    const row = document.createElement('tr');
+    const row = document.createElement('tr') as HTMLTableRowElement;
+   
     row.innerHTML = `
   
     <td>${project.name}</td>
@@ -400,7 +417,7 @@ const renderDashboard = () => {
 
 // Render the users section
 const renderUsers = () => {
-  mainBody.innerHTML = '<h1>Users Section</h1> <p>This is the Users section.</p>';
+  mainBody.innerHTML = '<h1>Users</h1>';
 };
 
 // Render the settings section
@@ -440,4 +457,4 @@ links.forEach((link) => {
 });
 
 // Set default content to Dashboard on page load
-renderDashboard();
+//renderDashboard();

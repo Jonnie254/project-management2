@@ -20,6 +20,29 @@ const modalOverlay = document.querySelector('.modal-overlay');
 const nameInput = document.querySelector('#nameInput');
 const descriptionInput = document.querySelector('#descriptionInput');
 const endDateInput = document.querySelector('#endDateInput');
+// Create a project
+const addProject = (newProject) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield fetch('http://localhost:3000/projects', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newProject),
+        });
+        if (response.ok) {
+            const project = yield response.json();
+            projects.push(project);
+            renderProjects();
+        }
+        else {
+            throw new Error('Failed to add project');
+        }
+    }
+    catch (error) {
+        console.error('Error adding project:', error);
+    }
+});
 // Fetch users from the server
 const fetchUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield fetch('http://localhost:3000/users');
@@ -163,11 +186,11 @@ const renderProjectFormModal = (project) => {
     successMessage.className = 'success';
     successMessage.id = 'successMessage';
     // Append elements to form
+    projectForm.appendChild(successMessage);
     projectForm.appendChild(nameLabel);
     projectForm.appendChild(descriptionLabel);
     projectForm.appendChild(endDateLabel);
     projectForm.appendChild(assignUserLabel);
-    projectForm.appendChild(successMessage);
     projectForm.appendChild(submitButton);
     // Append elements to modal content
     modalContent.appendChild(closeIcon);
@@ -224,30 +247,17 @@ const handleFormSubmission = (id) => __awaiter(void 0, void 0, void 0, function*
             endDate: endDateInput.value,
             assignedUser: assignUserSelect.value,
         };
-        console.log(projectData);
         try {
             if (id) {
                 yield updateProject(id, projectData);
-                successMessage.textContent = 'Project updated successfully!';
+                successMessage.style.display = 'block';
+                successMessage.textContent = 'project updated successfully';
             }
             else {
-                const response = yield fetch('http://localhost:3000/projects', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(projectData),
-                });
-                if (response.ok) {
-                    const project = yield response.json();
-                    projects.push(project);
-                    successMessage.textContent = 'Project added successfully!';
-                }
-                else {
-                    throw new Error('Failed to add project');
-                }
+                //await addProject(projectData);
+                successMessage.style.display = 'block';
+                successMessage.textContent = 'project created successfully';
             }
-            successMessage.style.color = 'green';
             // Reset form
             const form = document.querySelector('.projectForm');
             form.reset();
@@ -343,7 +353,7 @@ const renderDashboard = () => {
 };
 // Render the users section
 const renderUsers = () => {
-    mainBody.innerHTML = '<h1>Users Section</h1> <p>This is the Users section.</p>';
+    mainBody.innerHTML = '<h1>Users</h1>';
 };
 // Render the settings section
 const renderSettings = () => {
@@ -379,4 +389,4 @@ links.forEach((link) => {
     });
 });
 // Set default content to Dashboard on page load
-renderDashboard();
+//renderDashboard();
