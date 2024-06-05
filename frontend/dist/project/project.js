@@ -44,7 +44,7 @@ const deleteProject = (id) => __awaiter(void 0, void 0, void 0, function* () {
         throw new Error(`Failed to delete a project with id: ${id}`);
     }
     // Remove project from the array and re-render projects
-    projects = projects.filter(project => project.projectId !== id);
+    projects = projects.filter(project => project.id !== id);
     renderProjects();
 });
 // Update project
@@ -59,9 +59,13 @@ const updateProject = (id, updatedFields) => __awaiter(void 0, void 0, void 0, f
     if (!response.ok) {
         throw new Error(`Failed to update project with id ${id}`);
     }
-    // Update the project in the array and re-render projects
-    projects = projects.map(project => project.projectId === id ? Object.assign(Object.assign({}, project), updatedFields) : project);
-    renderProjects();
+    // Find the index of the project to be updated
+    const index = projects.findIndex(project => project.id === id);
+    // If the project is found, update it
+    if (index !== -1) {
+        projects[index] = Object.assign(Object.assign({}, projects[index]), updatedFields);
+    }
+    renderProjects(); // Re-render projects after update
 });
 // Populate the assign user dropdown with fetched users
 const populateUsersDropdown = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -172,13 +176,13 @@ const renderProjectFormModal = (project) => {
     modalOverlay.appendChild(modalContent);
     projectForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        handleFormSubmission(project === null || project === void 0 ? void 0 : project.projectId);
+        handleFormSubmission(project === null || project === void 0 ? void 0 : project.id);
     });
     modalOverlay.style.display = 'block';
     populateUsersDropdown(); // Populate user dropdown when the modal is rendered
 };
 // Handle form submission
-const handleFormSubmission = (projectId) => __awaiter(void 0, void 0, void 0, function* () {
+const handleFormSubmission = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const nameInput = document.querySelector('#nameInput');
     const descriptionInput = document.querySelector('#descriptionInput');
     const endDateInput = document.querySelector('#endDateInput');
@@ -220,9 +224,10 @@ const handleFormSubmission = (projectId) => __awaiter(void 0, void 0, void 0, fu
             endDate: endDateInput.value,
             assignedUser: assignUserSelect.value,
         };
+        console.log(projectData);
         try {
-            if (projectId) {
-                yield updateProject(projectId, projectData);
+            if (id) {
+                yield updateProject(id, projectData);
                 successMessage.textContent = 'Project updated successfully!';
             }
             else {
@@ -270,26 +275,50 @@ const renderProjects = () => __awaiter(void 0, void 0, void 0, function* () {
     projects.forEach((project) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-      <td>${project.name}</td>
-      <td>${project.description}</td>
-      <td>${project.assignedUser}</td>
-      <td>${project.endDate}</td>
-      <td>
-        <div class="actions">
-          <ion-icon name="create-outline" class="editBtn" ></ion-icon>
-          <ion-icon name="trash-outline" class="deleteBtn"></ion-icon>
-        </div>
-      </td>`;
+  
+    <td>${project.name}</td>
+    <td>${project.description}</td>
+    <td>${project.assignedUser}</td>
+    <td>${project.endDate}</td>
+    <td>
+      <div class="actions">
+       
+        <ion-icon name="create-outline" class="editBtn" data-id="${project.id}"></ion-icon>
+      
+        <ion-icon name="trash-outline" class="deleteBtn" data-id="${project.id}"></ion-icon>
+      </div>
+    </td>
+  
+  `;
         table.appendChild(row);
     });
     mainBody.appendChild(table);
     // Add event listeners for edit and delete buttons
-    const editButton = document.querySelector('.editBtn');
-    const deleteButton = document.querySelector('.deleteBtn');
-    editButton.addEventListener('click', () => {
-        renderProjectFormModal();
+    const editButtons = document.querySelectorAll('.editBtn');
+    const deleteButtons = document.querySelectorAll('.deleteBtn');
+    editButtons.forEach(editButton => {
+        editButton.addEventListener('click', () => {
+            const id = editButton.dataset.id;
+            const project = projects.find(proj => proj.id === id);
+            if (project) {
+                renderProjectFormModal(project);
+            }
+        });
     });
-    deleteButton.addEventListener('click', () => {
+    deleteButtons.forEach(deleteButton => {
+        deleteButton.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
+            const id = deleteButton.dataset.id;
+            if (id) {
+                try {
+                    yield deleteProject(id);
+                    // Render projects after deletion
+                    renderProjects();
+                }
+                catch (error) {
+                    console.error('Error deleting project:', error);
+                }
+            }
+        }));
     });
 });
 // Render the dashboard section

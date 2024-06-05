@@ -1,5 +1,5 @@
 interface Project {
-  projectId?: string;
+  id?: string;
   name: string;
   description: string;
   endDate: string;
@@ -52,7 +52,7 @@ const deleteProject = async (id: string) => {
     throw new Error(`Failed to delete a project with id: ${id}`);
   }
   // Remove project from the array and re-render projects
-  projects = projects.filter(project => project.projectId !== id);
+  projects = projects.filter(project => project.id !== id);
   renderProjects();
 }
 
@@ -72,12 +72,18 @@ const updateProject = async (
   if (!response.ok) {
     throw new Error(`Failed to update project with id ${id}`);
   }
-  // Update the project in the array and re-render projects
-  projects = projects.map(project =>
-    project.projectId === id ? { ...project, ...updatedFields } : project
-  );
-  renderProjects();
-}
+
+  // Find the index of the project to be updated
+  const index = projects.findIndex(project => project.id === id);
+
+  // If the project is found, update it
+  if (index !== -1) {
+    projects[index] = { ...projects[index], ...updatedFields };
+  }
+
+  renderProjects(); // Re-render projects after update
+};
+  
 
 // Populate the assign user dropdown with fetched users
 const populateUsersDropdown = async () => {
@@ -201,7 +207,7 @@ const renderProjectFormModal = (project?: Project) => {
 
   projectForm.addEventListener('submit', (event: Event) => {
     event.preventDefault();
-    handleFormSubmission(project?.projectId);
+    handleFormSubmission(project?.id);
   });
 
   modalOverlay.style.display = 'block';
@@ -209,7 +215,7 @@ const renderProjectFormModal = (project?: Project) => {
 };
 
 // Handle form submission
-const handleFormSubmission = async (projectId?: string) => {
+const handleFormSubmission = async (id?: string) => {
   const nameInput = document.querySelector('#nameInput') as HTMLInputElement;
   const descriptionInput = document.querySelector('#descriptionInput') as HTMLTextAreaElement;
   const endDateInput = document.querySelector('#endDateInput') as HTMLInputElement;
@@ -260,11 +266,14 @@ const handleFormSubmission = async (projectId?: string) => {
       assignedUser: assignUserSelect.value,
     };
 
+    console.log(projectData)
+
     try {
-      if (projectId) {
-        await updateProject(projectId, projectData);
+      if (id) {
+        await updateProject(id, projectData);
         successMessage.textContent = 'Project updated successfully!';
-      } else {
+      } 
+      else {
         const response = await fetch('http://localhost:3000/projects', {
           method: 'POST',
           headers: {
@@ -314,16 +323,21 @@ const renderProjects = async () => {
   projects.forEach((project: Project) => {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${project.name}</td>
-      <td>${project.description}</td>
-      <td>${project.assignedUser}</td>
-      <td>${project.endDate}</td>
-      <td>
-        <div class="actions">
-          <ion-icon name="create-outline" class="editBtn" ></ion-icon>
-          <ion-icon name="trash-outline" class="deleteBtn"></ion-icon>
-        </div>
-      </td>`;
+  
+    <td>${project.name}</td>
+    <td>${project.description}</td>
+    <td>${project.assignedUser}</td>
+    <td>${project.endDate}</td>
+    <td>
+      <div class="actions">
+       
+        <ion-icon name="create-outline" class="editBtn" data-id="${project.id}"></ion-icon>
+      
+        <ion-icon name="trash-outline" class="deleteBtn" data-id="${project.id}"></ion-icon>
+      </div>
+    </td>
+  
+  `;
 
     table.appendChild(row);
   });
@@ -331,16 +345,34 @@ const renderProjects = async () => {
   mainBody.appendChild(table);
 
   // Add event listeners for edit and delete buttons
-  const editButton = document.querySelector('.editBtn') as HTMLButtonElement;
-  const deleteButton = document.querySelector('.deleteBtn') as HTMLButtonElement;
+const editButtons = document.querySelectorAll('.editBtn') as NodeListOf<HTMLButtonElement>;
+const deleteButtons = document.querySelectorAll('.deleteBtn') as NodeListOf<HTMLButtonElement>;
 
-  editButton.addEventListener('click', () =>{
-     renderProjectFormModal();
-  })
+editButtons.forEach(editButton => {
+  editButton.addEventListener('click', () => {
+    const id = editButton.dataset.id;
+    const project = projects.find(proj => proj.id === id);
+    if (project) {
+      renderProjectFormModal(project);
+    }
+  });
+});
 
-  deleteButton.addEventListener('click', () =>{
-    
-  })
+deleteButtons.forEach(deleteButton => {
+  deleteButton.addEventListener('click', async () => {
+    const id = deleteButton.dataset.id;
+    if (id) {
+      try {
+        await deleteProject(id);
+        // Render projects after deletion
+        renderProjects();
+      } catch (error) {
+        console.error('Error deleting project:', error);
+      }
+    }
+  });
+});
+
   
 
 };

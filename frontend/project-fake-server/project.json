@@ -3,18 +3,10 @@
     {
       "id": "8416",
       "name": "Website Redesign",
-      "description": "Redesign the company website to improve user experience and update the branding.",
+      "description": "Redesign the company website to improve user experience ",
       "endDate": "2024-06-27",
       "assignedUser": "john@gmail.com"
-    },
-    {
-      "id": "4f03",
-      "name": "Mobile App Development",
-      "description": "Develop a mobile application for the company's new product line.",
-      "endDate": "2024-06-26",
-      "assignedUser": "simp@gmail.com"
     }
-   
   ],
   "users": [
     {
