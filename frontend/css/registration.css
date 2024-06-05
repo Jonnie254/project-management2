@@ -14,7 +14,7 @@ body {
   align-items: center;
   place-content: center;
 }
-.login-container {
+.register-container {
   background-color: #ffffff;
   padding: 20px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -30,13 +30,13 @@ body {
   justify-content: center;
   gap: 10px;
 }
-.container-form h2 {
+.container-form h1 {
   text-align: center;
 }
 form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   margin: 10px 0;
 }
 form input {
@@ -46,18 +46,8 @@ form input {
   outline: none;
   font-size: 16px;
 }
-.forgot-password {
-  display: flex;
-  justify-content: flex-end;
-  gap: 50px;
-}
-.forgot-password p {
-  color: #0077b6;
-  cursor: pointer;
-  font-size: 14px;
-}
 button {
-  padding: 10px;
+  padding: 10px 30px;
   background-color: #0077b6;
   color: #ffffff;
   border: none;
@@ -68,13 +58,35 @@ button {
 form input:focus {
   border: 2px solid #0077b6;
 }
+form p {
+  text-align: center;
+}
 form a {
   text-decoration: none;
   color: #0077b6;
-  cursor: pointer;
 }
 .error-message {
   color: red;
   text-align: center;
   display: none;
+}
+#pop-up {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: visibility 0.3s, opacity 0.3s, transform 0.3s;
+}
+
+#pop-up.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link stylesheet rel="stylesheet" href="/frontend/css/registration.css">
+    <title>Registration Form</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="pop-up">
+            <img src="/frontend/assests/green-check.jpg" class="tick" id="tick-green" width="50px" height="50px">
+            <h2 id="popup-title">Thank you</h2>
+            <p id="popup-message">Successfully created an account now you can log in</p>
+        </div>
+        <div class="register-container">
+            <div class="logo-name">
+                <img src="/frontend/assests/plus.png" width="50px" height="50px">
+                <p>Project Manager</p>
+            </div>
+            <div class="container-form">
+                <h1>Register</h1>
+                <form id="form-register">
+                    <input type="text" id="name-register" name="name" placeholder="Enter your name">
+                    <p class="error-message" id="name-error">Name is required</p>
+                    <input type="email" id="email-login" name="email" placeholder="Enter your email">
+                    <p class="error-message" id="email-error">Email is required</p>
+                    <input type="password" id="password-login" name="password" placeholder="Enter your password">
+                    <p class="error-message" id="password-error">Password is required</p>
+                    <input type="password" id="confirm-password" name="confirm-password"
+                        placeholder="Confirm your password">
+                    <p class="error-message" id="confirm-password-error">Passwords do not match</p>
+                    <button type="submit" class="register-btn" id="register-btn">Register</button>
+                    <p>Already have an account? <a href="/frontend/html/login.html">Login</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/frontend/dist/users/users.js"></script>
+</body>
+
+</html>

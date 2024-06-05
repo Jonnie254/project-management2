@@ -16,20 +16,22 @@
                 <p>Project Manager</p>
             </div>
             <div class="container-form">
-                <form id="form-id">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password">
-                    <div class="password">
+                <h2>Login</h2>
+                <form id="form-login">
+                    <input type="email" id="email-login" name="email" placeholder="Enter your email">
+                    <p class="error-message" id="email-error">Email is required</p>
+                    <input type="password" id="password-login" name="password" placeholder="Enter your password">
+                    <p class="error-message" id="password-error">Password is required</p>
+                    <button type="submit" class="login-btn" id="login-button">Login</button>
+                    <div class="forgot-password">
                         <p>Forgot password</p>
-                        <p>Sign up</p>
+                        <p>Already have an account? <a href="/frontend/html/userregistration.html">Sign up</a></p>
                     </div>
-                    <button type="submit" class="login-btn">Login</button>
                 </form>
             </div>
         </div>
     </div>
+    <script src="/frontend/dist/users/users.js"></script>
 </body>
 
 </html>
