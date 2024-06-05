@@ -1,6 +1,7 @@
 {
   "projects": [
     {
+<<<<<<< Updated upstream
       "id": "ed2e",
       "name": "Mobile App",
       "description": "Using Kotl",
@@ -34,6 +35,13 @@
       "description": "cd",
       "endDate": "2024-06-12",
       "assignedUser": "simp@gmail.com"
+=======
+      "id": "8416",
+      "name": "Website Redesign",
+      "description": "Redesign the company website to improve user experience ",
+      "endDate": "2024-06-27",
+      "assignedUser": "john@gmail.com"
+>>>>>>> Stashed changes
     }
   ],
   "users": [

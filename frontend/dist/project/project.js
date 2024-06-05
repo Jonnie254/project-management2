@@ -20,6 +20,7 @@ const modalOverlay = document.querySelector('.modal-overlay');
 const nameInput = document.querySelector('#nameInput');
 const descriptionInput = document.querySelector('#descriptionInput');
 const endDateInput = document.querySelector('#endDateInput');
+<<<<<<< Updated upstream
 // Create a project
 const addProject = (newProject) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -43,6 +44,8 @@ const addProject = (newProject) => __awaiter(void 0, void 0, void 0, function* (
         console.error('Error adding project:', error);
     }
 });
+=======
+>>>>>>> Stashed changes
 // Fetch users from the server
 const fetchUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield fetch('http://localhost:3000/users');
@@ -186,11 +189,18 @@ const renderProjectFormModal = (project) => {
     successMessage.className = 'success';
     successMessage.id = 'successMessage';
     // Append elements to form
+<<<<<<< Updated upstream
     projectForm.appendChild(successMessage);
+=======
+>>>>>>> Stashed changes
     projectForm.appendChild(nameLabel);
     projectForm.appendChild(descriptionLabel);
     projectForm.appendChild(endDateLabel);
     projectForm.appendChild(assignUserLabel);
+<<<<<<< Updated upstream
+=======
+    projectForm.appendChild(successMessage);
+>>>>>>> Stashed changes
     projectForm.appendChild(submitButton);
     // Append elements to modal content
     modalContent.appendChild(closeIcon);
@@ -247,6 +257,7 @@ const handleFormSubmission = (id) => __awaiter(void 0, void 0, void 0, function*
             endDate: endDateInput.value,
             assignedUser: assignUserSelect.value,
         };
+<<<<<<< Updated upstream
         try {
             if (id) {
                 yield updateProject(id, projectData);
@@ -258,6 +269,32 @@ const handleFormSubmission = (id) => __awaiter(void 0, void 0, void 0, function*
                 successMessage.style.display = 'block';
                 successMessage.textContent = 'project created successfully';
             }
+=======
+        console.log(projectData);
+        try {
+            if (id) {
+                yield updateProject(id, projectData);
+                successMessage.textContent = 'Project updated successfully!';
+            }
+            else {
+                const response = yield fetch('http://localhost:3000/projects', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(projectData),
+                });
+                if (response.ok) {
+                    const project = yield response.json();
+                    projects.push(project);
+                    successMessage.textContent = 'Project added successfully!';
+                }
+                else {
+                    throw new Error('Failed to add project');
+                }
+            }
+            successMessage.style.color = 'green';
+>>>>>>> Stashed changes
             // Reset form
             const form = document.querySelector('.projectForm');
             form.reset();
@@ -353,7 +390,11 @@ const renderDashboard = () => {
 };
 // Render the users section
 const renderUsers = () => {
+<<<<<<< Updated upstream
     mainBody.innerHTML = '<h1>Users</h1>';
+=======
+    mainBody.innerHTML = '<h1>Users Section</h1> <p>This is the Users section.</p>';
+>>>>>>> Stashed changes
 };
 // Render the settings section
 const renderSettings = () => {
@@ -389,4 +430,8 @@ links.forEach((link) => {
     });
 });
 // Set default content to Dashboard on page load
+<<<<<<< Updated upstream
 //renderDashboard();
+=======
+renderDashboard();
+>>>>>>> Stashed changes

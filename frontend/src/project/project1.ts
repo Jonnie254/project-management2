@@ -26,6 +26,7 @@ const nameInput = document.querySelector('#nameInput') as HTMLInputElement;
 const descriptionInput = document.querySelector('#descriptionInput') as HTMLTextAreaElement;
 const endDateInput = document.querySelector('#endDateInput') as HTMLInputElement;
 
+<<<<<<< Updated upstream
 // Create a project
 const addProject = async (newProject: Project) => {
   try {
@@ -49,6 +50,8 @@ const addProject = async (newProject: Project) => {
   }
 };
 
+=======
+>>>>>>> Stashed changes
 // Fetch users from the server
 const fetchUsers = async () => {
   const response = await fetch('http://localhost:3000/users');
@@ -214,11 +217,18 @@ const renderProjectFormModal = (project?: Project) => {
   successMessage.id = 'successMessage';
 
   // Append elements to form
+<<<<<<< Updated upstream
   projectForm.appendChild(successMessage);
+=======
+>>>>>>> Stashed changes
   projectForm.appendChild(nameLabel);
   projectForm.appendChild(descriptionLabel);
   projectForm.appendChild(endDateLabel);
   projectForm.appendChild(assignUserLabel);
+<<<<<<< Updated upstream
+=======
+  projectForm.appendChild(successMessage);
+>>>>>>> Stashed changes
   projectForm.appendChild(submitButton);
 
   // Append elements to modal content
@@ -248,9 +258,13 @@ const handleFormSubmission = async (id?: string) => {
   const descriptionError = document.querySelector('#descriptionError') as HTMLParagraphElement;
   const endDateError = document.querySelector('#endDateError') as HTMLParagraphElement;
   const assignUserError = document.querySelector('#assignUserError') as HTMLParagraphElement;
+<<<<<<< Updated upstream
 
   const successMessage = document.querySelector('#successMessage') as HTMLParagraphElement;
  
+=======
+  const successMessage = document.querySelector('#successMessage') as HTMLParagraphElement;
+>>>>>>> Stashed changes
 
   let isValid = true;
 
@@ -291,10 +305,15 @@ const handleFormSubmission = async (id?: string) => {
       assignedUser: assignUserSelect.value,
     };
 
+<<<<<<< Updated upstream
+=======
+    console.log(projectData)
+>>>>>>> Stashed changes
 
     try {
       if (id) {
         await updateProject(id, projectData);
+<<<<<<< Updated upstream
         successMessage.style.display='block'
         successMessage.textContent='project updated successfully'
        
@@ -306,15 +325,42 @@ const handleFormSubmission = async (id?: string) => {
       }
       
       
+=======
+        successMessage.textContent = 'Project updated successfully!';
+      } 
+      else {
+        const response = await fetch('http://localhost:3000/projects', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(projectData),
+        });
+
+        if (response.ok) {
+          const project = await response.json();
+          projects.push(project);
+          successMessage.textContent = 'Project added successfully!';
+        } else {
+          throw new Error('Failed to add project');
+        }
+      }
+
+      successMessage.style.color = 'green';
+>>>>>>> Stashed changes
 
       // Reset form
       const form = document.querySelector('.projectForm') as HTMLFormElement;
       form.reset();
       renderProjects();
       populateUsersDropdown(); // Refresh user dropdown to reflect assignment
+<<<<<<< Updated upstream
 
     } catch (error) {
       
+=======
+    } catch (error) {
+>>>>>>> Stashed changes
       console.error('Error handling project:', error);
     }
   }
@@ -337,8 +383,12 @@ const renderProjects = async () => {
   table.appendChild(headerRow);
 
   projects.forEach((project: Project) => {
+<<<<<<< Updated upstream
     const row = document.createElement('tr') as HTMLTableRowElement;
    
+=======
+    const row = document.createElement('tr');
+>>>>>>> Stashed changes
     row.innerHTML = `
   
     <td>${project.name}</td>
@@ -417,7 +467,11 @@ const renderDashboard = () => {
 
 // Render the users section
 const renderUsers = () => {
+<<<<<<< Updated upstream
   mainBody.innerHTML = '<h1>Users</h1>';
+=======
+  mainBody.innerHTML = '<h1>Users Section</h1> <p>This is the Users section.</p>';
+>>>>>>> Stashed changes
 };
 
 // Render the settings section
@@ -457,4 +511,8 @@ links.forEach((link) => {
 });
 
 // Set default content to Dashboard on page load
+<<<<<<< Updated upstream
 //renderDashboard();
+=======
+renderDashboard();
+>>>>>>> Stashed changes
